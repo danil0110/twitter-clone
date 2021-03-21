@@ -15,12 +15,16 @@ export default class App extends React.Component {
                 { label: 'I going to learn React', important: false, liked: false, id: 1 },
                 { label: 'Want to learn JS', important: true, liked: false, id: 2 },
                 { label: 'I learn C#', important: true, liked: false, id: 3 }
-            ]
+            ],
+            term: '',
+            filter: 'all'
         }
         this.onDelete = this.onDelete.bind(this);
         this.onAdd = this.onAdd.bind(this);
         this.onToggleImportant = this.onToggleImportant.bind(this);
         this.onToggleLiked = this.onToggleLiked.bind(this);
+        this.onUpdateSearch = this.onUpdateSearch.bind(this);
+        this.onFilterSelect = this.onFilterSelect.bind(this);
 
         this.maxId = 4;
     }
@@ -82,10 +86,36 @@ export default class App extends React.Component {
         });
     }
 
+    searchPosts(array, term) {
+        if (term.length === 0) {
+            return array;
+        }
+
+        return array.filter(item => item.label.indexOf(term) > -1);
+    }
+
+    filterPosts(array, filter) {
+        if (filter === 'liked') {
+            return array.filter(item => item.liked);
+        } else {
+            return array;
+        }
+    }
+
+    onUpdateSearch(term) {
+        this.setState({term});
+    }
+
+    onFilterSelect(filter) {
+        this.setState({filter});
+    }
+
     render() {
-        const {data} = this.state;
+        const {data, term, filter} = this.state;
         const liked = data.filter(item => item.liked).length;
         const allPosts = data.length;
+
+        const visiblePosts = this.filterPosts(this.searchPosts(data, term), filter);
 
         return (
             <div className="app">
@@ -93,10 +123,13 @@ export default class App extends React.Component {
                     liked={liked}
                     allPosts={allPosts} />
                 <div className="search-panel d-flex">
-                    <SearchPanel />
-                    <ListStatusFilter />
+                    <SearchPanel
+                        onUpdateSearch={this.onUpdateSearch} />
+                    <ListStatusFilter
+                        filter={filter}
+                        onFilterSelect={this.onFilterSelect} />
                 </div>
-                <AppList posts={this.state.data}
+                <AppList posts={visiblePosts}
                     onDelete={this.onDelete}
                     onToggleImportant={this.onToggleImportant}
                     onToggleLiked={this.onToggleLiked} />

@@ -18,10 +18,10 @@ export default class AppListItem extends React.Component {
             <div className={classNames}>
                 <span className="app-list-item-label" onClick={onToggleLiked}>{label}</span>
                 <div className="d-flex justify-content-center align-items-center">
-                    <button className="btn-star btn-sm" onClick={onToggleImportant}>
+                    <button className="btn btn-star" onClick={onToggleImportant}>
                         <i className="fa fa-star"></i>
                     </button>
-                    <button className="btn-trash btn-sm" onClick={onDelete}>
+                    <button className="btn btn-trash" onClick={onDelete}>
                         <i className="fa fa-trash-o"></i>
                     </button>
                     <i className="fa fa-heart"></i>
