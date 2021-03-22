@@ -21,8 +21,7 @@ export default class App extends React.Component {
         }
         this.onDelete = this.onDelete.bind(this);
         this.onAdd = this.onAdd.bind(this);
-        this.onToggleImportant = this.onToggleImportant.bind(this);
-        this.onToggleLiked = this.onToggleLiked.bind(this);
+        this.onToggle = this.onToggle.bind(this);
         this.onUpdateSearch = this.onUpdateSearch.bind(this);
         this.onFilterSelect = this.onFilterSelect.bind(this);
 
@@ -56,27 +55,12 @@ export default class App extends React.Component {
         });
     }
 
-    onToggleImportant(id) {
+    onToggle(id, option) {
         this.setState(({data}) => {
             const index = data.findIndex(item => item.id === id);
 
             const oldItem = data[index];
-            const newItem = {...oldItem, important: !oldItem.important};
-
-            const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
-
-            return {
-                data: newArr
-            };
-        });
-    }
-
-    onToggleLiked(id) {
-        this.setState(({data}) => {
-            const index = data.findIndex(item => item.id === id);
-
-            const oldItem = data[index];
-            const newItem = {...oldItem, liked: !oldItem.liked};
+            const newItem = {...oldItem, [option]: !oldItem[option]};
 
             const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
 
@@ -131,8 +115,7 @@ export default class App extends React.Component {
                 </div>
                 <AppList posts={visiblePosts}
                     onDelete={this.onDelete}
-                    onToggleImportant={this.onToggleImportant}
-                    onToggleLiked={this.onToggleLiked} />
+                    onToggle={this.onToggle} />
                 <ItemAddForm onAdd={this.onAdd} />
             </div>
         );

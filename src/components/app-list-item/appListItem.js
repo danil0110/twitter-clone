@@ -4,7 +4,7 @@ import './appListItem.css';
 
 export default class AppListItem extends React.Component {
     render() {
-        const {label, onDelete, onToggleImportant, onToggleLiked, important, liked} = this.props;
+        const {label, onDelete, onToggle, important, liked} = this.props;
         let classNames = 'app-list-item d-flex justify-content-between';
         if (important) {
             classNames += ' important';
@@ -16,9 +16,9 @@ export default class AppListItem extends React.Component {
 
         return (
             <div className={classNames}>
-                <span className="app-list-item-label" onClick={onToggleLiked}>{label}</span>
+                <span className="app-list-item-label" onClick={() => onToggle('liked')}>{label}</span>
                 <div className="d-flex justify-content-center align-items-center">
-                    <button className="btn btn-star" onClick={onToggleImportant}>
+                    <button className="btn btn-star" onClick={() => onToggle('important')}>
                         <i className="fa fa-star"></i>
                     </button>
                     <button className="btn btn-trash" onClick={onDelete}>
