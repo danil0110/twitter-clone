@@ -1,7 +1,6 @@
 import React from 'react';
 
 import AppListItem from '../app-list-item/appListItem';
-import ItemAddForm from '../item-add-form/itemAddForm';
 import './appList.css';
 
 const AppList = ({posts, onDelete, onToggle}) => {
